@@ -107,76 +107,79 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const modalTrigger = document.querySelectorAll('[data-modal]'),
     modal = document.querySelector('.modal'),
-    modalCloseBtn = document.querySelector('[data-close]')
+    modalCloseBtn = document.querySelector('[data-close]');
 
-  function closeModal(){
-    modal.classList.add('hide')
-    modal.classList.remove('show')
-    document.body.style.overflow = ''
+  function closeModal() {
+    modal.classList.add('hide');
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
   }
 
-  function openModal(){
-    modal.classList.add('show')
-    modal.classList.remove('hide')
-    document.body.style.overflow = 'hidden'
-    clearInterval(modalTimerId)
+  function openModal() {
+    modal.classList.add('show');
+    modal.classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+    clearInterval(modalTimerId);
   }
 
-  modalTrigger.forEach(item => {
-    item.addEventListener('click', openModal)
-  })
+  modalTrigger.forEach((item) => {
+    item.addEventListener('click', openModal);
+  });
 
-  modalCloseBtn.addEventListener('click', closeModal)
+  modalCloseBtn.addEventListener('click', closeModal);
 
-  modal.addEventListener('click', (e)=>{
-    if(e.target == modal){
-      closeModal()
+  modal.addEventListener('click', (e) => {
+    if (e.target == modal) {
+      closeModal();
     }
-  })
+  });
 
-  document.addEventListener('keydown', (e)=>{
-    if(e.code === 'Escape' && modal.classList.contains('show')){
-      closeModal()
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape' && modal.classList.contains('show')) {
+      closeModal();
     }
-  })
+  });
 
-  const modalTimerId = setTimeout(openModal, 3000)
+  const modalTimerId = setTimeout(openModal, 3000);
 
-  function showModalByScroll (){
-    if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight){
-      openModal()
-      window.removeEventListener('scroll', showModalByScroll)
+  function showModalByScroll() {
+    if (
+      window.pageYOffset + document.documentElement.clientHeight >=
+      document.documentElement.scrollHeight
+    ) {
+      openModal();
+      window.removeEventListener('scroll', showModalByScroll);
     }
   }
 
-  window.addEventListener('scroll', showModalByScroll)
+  window.addEventListener('scroll', showModalByScroll);
 
   // Class
-  class MenuCard{
-    constructor(src, alt, title, descr, price, parentSelector, ...clasess){
-      this.src = src
-      this.alt = alt
-      this.title = title
-      this.descr = descr
-      this.price = price
-      this.clasess = clasess
-      this.parent = document.querySelector(parentSelector)
-      this.transfer = 11000
-      this.changeToUzs()
+  class MenuCard {
+    constructor(src, alt, title, descr, price, parentSelector, ...clasess) {
+      this.src = src;
+      this.alt = alt;
+      this.title = title;
+      this.descr = descr;
+      this.price = price;
+      this.clasess = clasess;
+      this.parent = document.querySelector(parentSelector);
+      this.transfer = 11000;
+      this.changeToUzs();
     }
 
-    changeToUzs(){
-      this.price = this.price * this.transfer
+    changeToUzs() {
+      this.price = this.price * this.transfer;
     }
 
-    render(){
-      const element = document.createElement('div')
+    render() {
+      const element = document.createElement('div');
 
-      if(this.clasess.length === 0){
-        this.element = 'menu__item'
-        element.classList.add(this.element)
-      }else{
-        this.clasess.forEach((classname) => element.classList.add(classname))
+      if (this.clasess.length === 0) {
+        this.element = 'menu__item';
+        element.classList.add(this.element);
+      } else {
+        this.clasess.forEach((classname) => element.classList.add(classname));
       }
 
       element.innerHTML = `
@@ -187,93 +190,92 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="menu__item-price">
           <div class="menu__item-cost">Price:</div>
           <div class="menu__item-total"><span>${this.price}</span> uzs/month</div>
-        </div>`
+        </div>`;
 
-      this.parent.append(element)
+      this.parent.append(element);
     }
   }
 
   new MenuCard(
-    "img/tabs/1.png",
-    "usual",
+    'img/tabs/1.png',
+    'usual',
     'Plan "Usual"',
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
     10,
     '.menu .container',
     'menu__item'
-  ).render()
+  ).render();
 
   new MenuCard(
-    "img/tabs/2.jpg",
-    "plan",
+    'img/tabs/2.jpg',
+    'plan',
     'Plan “Premium”',
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
     20,
     '.menu .container',
     'menu__item'
-  ).render()
+  ).render();
 
   new MenuCard(
-    "img/tabs/3.jpg",
-    "vip",
+    'img/tabs/3.jpg',
+    'vip',
     'Plan "VIP"',
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
     30,
     '.menu .container',
     'menu__item'
-  ).render()
+  ).render();
 
   // Form
-  const forms = document.querySelectorAll('form')
+  const forms = document.querySelectorAll('form');
 
-  forms.forEach(form => {
-    postData(form)
-  })
+  forms.forEach((form) => {
+    postData(form);
+  });
 
   const msg = {
     loading: 'loading',
     success: 'Thanks for submitting our form',
-    failure: 'Something went wrong'
-  }
+    failure: 'Something went wrong',
+  };
 
-  function postData(form){
-    form.addEventListener('submit', (e)=>{
-      e.preventDefault()
+  function postData(form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-      const statusMassage = document.createElement('div')
-      form.append(statusMassage)
+      const statusMassage = document.createElement('div');
+      form.append(statusMassage);
 
-      const request = new XMLHttpRequest()
-      request.open('POST', 'server.php')
+      const request = new XMLHttpRequest();
+      request.open('POST', 'server.php');
 
-      request.setRequestHeader('Content-Type', 'application/json')
-      
-      const obj = {}
-      const formData = new FormData(form)
-      formData.forEach((val, key)=>{
-        obj[key] = val
-      })
+      request.setRequestHeader('Content-Type', 'application/json');
 
-      const json = JSON.stringify(obj)
+      const obj = {};
+      const formData = new FormData(form);
 
-      request.send(json)
+      formData.forEach((val, key) => {
+        obj[key] = val;
+      });
 
-      request.addEventListener('load', ()=>{
-        if(request.status === 200){
+      const json = JSON.stringify(obj);
+
+      request.send(json);
+
+      request.addEventListener('load', () => {
+        if (request.status === 200) {
           console.log(request.response);
-          statusMassage.textContent = msg.success
-          form.reset()
-          setTimeout(()=>{
-            statusMassage.remove()
-          },2000)
-        }else{
-          statusMassage.textContent = msg.failure
+          statusMassage.textContent = msg.success;
+          form.reset();
+          setTimeout(() => {
+            statusMassage.remove();
+          }, 2000);
+        } else {
+          statusMassage.textContent = msg.failure;
         }
-      })
-    })
+      });
+    });
   }
-
-
 
 
 
