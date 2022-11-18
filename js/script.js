@@ -223,7 +223,7 @@ window.addEventListener('DOMContentLoaded', () => {
     'menu__item'
   ).render()
 
-  Form
+  // Form
   const forms = document.querySelectorAll('form')
 
   forms.forEach(form => {
