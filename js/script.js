@@ -223,5 +223,59 @@ window.addEventListener('DOMContentLoaded', () => {
     'menu__item'
   ).render()
 
+  Form
+  const forms = document.querySelectorAll('form')
+
+  forms.forEach(form => {
+    postData(form)
+  })
+
+  const msg = {
+    loading: 'loading',
+    success: 'Thanks for submitting our form',
+    failure: 'Something went wrong'
+  }
+
+  function postData(form){
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault()
+
+      const statusMassage = document.createElement('div')
+      form.append(statusMassage)
+
+      const request = new XMLHttpRequest()
+      request.open('POST', 'server.php')
+
+      request.setRequestHeader('Content-Type', 'application/json')
+      
+      const obj = {}
+      const formData = new FormData(form)
+      formData.forEach((val, key)=>{
+        obj[key] = val
+      })
+
+      const json = JSON.stringify(obj)
+
+      request.send(json)
+
+      request.addEventListener('load', ()=>{
+        if(request.status === 200){
+          console.log(request.response);
+          statusMassage.textContent = msg.success
+          form.reset()
+          setTimeout(()=>{
+            statusMassage.remove()
+          },2000)
+        }else{
+          statusMassage.textContent = msg.failure
+        }
+      })
+    })
+  }
+
+
+
+
+
 
 });
