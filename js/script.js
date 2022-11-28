@@ -248,37 +248,34 @@ window.addEventListener('DOMContentLoaded', () => {
       margin: 0 auto;
       `
       form.insertAdjacentElement('afterend', statusMessage)
-      
 
-
-      const request = new XMLHttpRequest();
-      request.open('POST', 'server.php');
-
-      request.setRequestHeader('Content-Type', 'application/json');
-
-      const obj = {};
       const formData = new FormData(form);
 
+      const obj = {};
       formData.forEach((val, key) => {
         obj[key] = val;
       });
 
-      const json = JSON.stringify(obj);
-
-      request.send(json);
-
-      request.addEventListener('load', () => {
-        if (request.status === 200) {
-          console.log(request.response);
+      fetch('server.php', {
+        method:'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(obj),
+      })
+      .then((data)=>data.text())
+        .then((data)=>{
+          console.log(data);
           showThanksModal(msg.success)
-          form.reset();
-          setTimeout(() => {
-            statusMessage.remove();
-          }, 2000);
-        } else {
+          
+          statusMessage.remove()
+        })
+        .catch(()=>{
           showThanksModal(msg.failure)
-        }
-      });
+        })
+        .finally(()=>{
+          form.reset()
+        })
+
+
     });
   }
 
@@ -306,5 +303,13 @@ window.addEventListener('DOMContentLoaded', () => {
     },4000)
   }
 
-
+  // fetch('https://jsonplaceholder.typicode.com/posts', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({name: 'bekzod'}),
+  // })
+  // .then(response => response.json())
+  // .then(json => console.log(json))
 });
