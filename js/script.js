@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Modal
 
   const modalTrigger = document.querySelectorAll('[data-modal]'),
-    modal = document.querySelector('.modal')
+    modal = document.querySelector('.modal');
 
   function closeModal() {
     modal.classList.add('hide');
@@ -125,9 +125,8 @@ window.addEventListener('DOMContentLoaded', () => {
     item.addEventListener('click', openModal);
   });
 
-
   modal.addEventListener('click', (e) => {
-    if (e.target == modal || e.target.getAttribute('data-close')=='') {
+    if (e.target == modal || e.target.getAttribute('data-close') == '') {
       closeModal();
     }
   });
@@ -242,12 +241,12 @@ window.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       const statusMessage = document.createElement('img');
-      statusMessage.src = msg.loading
+      statusMessage.src = msg.loading;
       statusMessage.style.cssText = `
       display: block;
       margin: 0 auto;
-      `
-      form.insertAdjacentElement('afterend', statusMessage)
+      `;
+      form.insertAdjacentElement('afterend', statusMessage);
 
       const formData = new FormData(form);
 
@@ -257,59 +256,53 @@ window.addEventListener('DOMContentLoaded', () => {
       });
 
       fetch('server.php', {
-        method:'POST',
-        headers: {'Content-Type': 'application/json'},
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(obj),
       })
-      .then((data)=>data.text())
-        .then((data)=>{
+        .then((data) => data.text())
+        .then((data) => {
           console.log(data);
-          showThanksModal(msg.success)
-          
-          statusMessage.remove()
-        })
-        .catch(()=>{
-          showThanksModal(msg.failure)
-        })
-        .finally(()=>{
-          form.reset()
-        })
+          showThanksModal(msg.success);
 
-
+          statusMessage.remove();
+        })
+        .catch(() => {
+          showThanksModal(msg.failure);
+        })
+        .finally(() => {
+          form.reset();
+        });
     });
   }
 
-  function showThanksModal(message){
-    const prevModalDialog = document.querySelector('.modal__dialog')
-    
-    prevModalDialog.classList.add('hide')
-    openModal()
+  function showThanksModal(message) {
+    const prevModalDialog = document.querySelector('.modal__dialog');
 
-    const thanksModal = document.createElement('div')
-    thanksModal.classList.add('modal__dialog')
+    prevModalDialog.classList.add('hide');
+    openModal();
+
+    const thanksModal = document.createElement('div');
+    thanksModal.classList.add('modal__dialog');
     thanksModal.innerHTML = `
     <div class="modal__content">
       <div data-close class="modal__close">&times;</div>
       <div class="modal__title">${message}</div>
     </div>
-    `
+    `;
 
-    document.querySelector('.modal').append(thanksModal)
-    setTimeout(()=>{
-      thanksModal.remove()
-      prevModalDialog.classList.add('show')
-      prevModalDialog.classList.remove('hide')
-      closeModal()
-    },4000)
+    document.querySelector('.modal').append(thanksModal);
+    setTimeout(() => {
+      thanksModal.remove();
+      prevModalDialog.classList.add('show');
+      prevModalDialog.classList.remove('hide');
+      closeModal();
+    }, 4000);
   }
 
-  // fetch('https://jsonplaceholder.typicode.com/posts', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({name: 'bekzod'}),
-  // })
-  // .then(response => response.json())
-  // .then(json => console.log(json))
+
+
+  fetch('http://localhost:3000/menu')
+    .then((data) => data.json())
+    .then((res) => console.log(res));
 });

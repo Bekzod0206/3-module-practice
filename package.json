@@ -1,0 +1,26 @@
+{
+  "name": "serial2",
+  "version": "1.0.0",
+  "description": "JavaScript from 0 to hero",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bekzod0206/3-module-practice.git"
+  },
+  "keywords": [
+    "js",
+    "html"
+  ],
+  "author": "Bekzod Davronov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bekzod0206/3-module-practice/issues"
+  },
+  "homepage": "https://github.com/Bekzod0206/3-module-practice#readme",
+  "devDependencies": {
+    "json-server": "^0.17.1"
+  }
+}
