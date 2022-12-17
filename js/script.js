@@ -193,35 +193,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  new MenuCard(
-    'img/tabs/1.png',
-    'usual',
-    'Plan "Usual"',
-    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
-    10,
-    '.menu .container',
-    'menu__item'
-  ).render();
+  async function getResource(url) {
+    const res = await fetch(url);
 
-  new MenuCard(
-    'img/tabs/2.jpg',
-    'plan',
-    'Plan “Premium”',
-    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
-    20,
-    '.menu .container',
-    'menu__item'
-  ).render();
+    return await res.json();
+  }
 
-  new MenuCard(
-    'img/tabs/3.jpg',
-    'vip',
-    'Plan "VIP"',
-    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.',
-    30,
-    '.menu .container',
-    'menu__item'
-  ).render();
+  getResource('http://localhost:3000/menu').then((data) => {
+    data.forEach(({ img, altimg, title, descr, price }) => {
+      new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    });
+  });
 
   // Form
   const forms = document.querySelectorAll('form');
@@ -236,17 +218,16 @@ window.addEventListener('DOMContentLoaded', () => {
     failure: 'Something went wrong',
   };
 
-
-  async function postData(url, data){
+  async function postData(url, data) {
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json' 
+      headers: {
+        'Content-Type': 'application/json',
       },
       body: data,
-    })
+    });
 
-    return await res.json()
+    return await res.json();
   }
 
   function bindPostData(form) {
@@ -263,7 +244,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const formData = new FormData(form);
 
-      const json = JSON.stringify(Object.fromEntries(formData.entries()))
+      const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
       postData('http://localhost:3000/request', json)
         .then((data) => {
@@ -303,5 +284,4 @@ window.addEventListener('DOMContentLoaded', () => {
       closeModal();
     }, 4000);
   }
-
 });
