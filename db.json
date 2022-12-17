@@ -1,5 +1,5 @@
 {
-  "menu":[
+  "menu": [
     {
       "img": "img/tabs/1.png",
       "altimg": "usual",
@@ -22,5 +22,30 @@
       "price": 30
     }
   ],
-  "request":[]
+  "request": [
+    {
+      "name": "Bekzod Davronov",
+      "phone": "+123456789",
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "name": "Michael Jordan",
+      "phone": "+1111111222",
+      "id": 5
+    },
+    {
+      "name": "Bekzod Davronov",
+      "phone": "+1111111222",
+      "id": 6
+    }
+  ]
 }
