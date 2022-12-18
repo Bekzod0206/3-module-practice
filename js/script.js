@@ -48,7 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Timer
 
-  const deadline = '2023-05-04';
+  const deadline = '2023-06-20';
 
   function getTimeRemaining(endtime) {
     let days, hours, minutes, seconds;
@@ -287,46 +287,115 @@ window.addEventListener('DOMContentLoaded', () => {
     next = document.querySelector('.offer__slider-next'),
     prev = document.querySelector('.offer__slider-prev'),
     total = document.querySelector('#total'),
-    current = document.querySelector('#current')
+    current = document.querySelector('#current'),
+    slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+    slidesField = document.querySelector('.offer__slider-inner'),
+    width = window.getComputedStyle(slidesWrapper).width
 
   let slideIndex = 1
+  let offSet = 0
 
-  showSlides(slideIndex)
+  // -------***************************************-------
+  //              CAROUSEL SLIDER
+  // -------***************************************-------
 
   if(slides.length < 10){
     total.textContent = `0${slides.length}`
+    current.textContent = `0${slideIndex}`
   }else{
     total.textContent = slides.length
+    current.textContent = slideIndex
   }
 
-  function showSlides(idx){
-    if(idx > slides.length){
+  slidesField.style.width = 100 * slides.length + '%'
+  slidesField.style.display = 'flex'
+  slidesField.style.transition = '.5s ease all'
+  slidesWrapper.style.overflow = 'hidden'
+
+  slides.forEach(slide => {
+    slide.style.width = width
+  })
+
+  next.addEventListener('click', () => {
+    if(offSet == +width.slice(0, width.length - 2) * (slides.length -1)){
+      offSet = 0
+    }else{
+      offSet += +width.slice(0, width.length - 2)
+    }
+    slidesField.style.transform = `translateX(-${offSet}px)`
+    if(slideIndex == slides.length){
       slideIndex = 1
+    }else{
+      slideIndex++
     }
-    if(idx < 1){
-      slideIndex = slides.length
-    }
-    slides.forEach(item => item.style.display = 'none')
-    slides[slideIndex - 1].style.display = 'block'
 
     if(slides.length < 10){
       current.textContent = `0${slideIndex}`
     }else{
       current.textContent = slideIndex
     }
-  }
-
-  function plusSlides(idx){
-    showSlides(slideIndex += idx)
-  }
-
-  next.addEventListener('click', () => {
-    plusSlides(+1)
   })
 
   prev.addEventListener('click', () => {
-    plusSlides(-1)
+    if(offSet == 0){
+      offSet = +width.slice(0, width.length - 2) * (slides.length - 1)
+    }else{
+      offSet -= +width.slice(0, width.length - 2)
+    }
+    slidesField.style.transform = `translateX(-${offSet}px)`
+    if(slideIndex == 1){
+      slideIndex = slides.length
+    }else{
+      slideIndex--
+    }
+
+    if(slides.length < 10){
+      current.textContent = `0${slideIndex}`
+    }else{
+      current.textContent = slideIndex
+    }
   })
+
+  // -------***************************************-------
+  //                EASY SLIDER
+  // -------***************************************-------
+
+  // showSlides(slideIndex)
+
+  // if(slides.length < 10){
+  //   total.textContent = `0${slides.length}`
+  // }else{
+  //   total.textContent = slides.length
+  // }
+
+  // function showSlides(idx){
+  //   if(idx > slides.length){
+  //     slideIndex = 1
+  //   }
+  //   if(idx < 1){
+  //     slideIndex = slides.length
+  //   }
+  //   slides.forEach(item => item.style.display = 'none')
+  //   slides[slideIndex - 1].style.display = 'block'
+
+  //   if(slides.length < 10){
+  //     current.textContent = `0${slideIndex}`
+  //   }else{
+  //     current.textContent = slideIndex
+  //   }
+  // }
+
+  // function plusSlides(idx){
+  //   showSlides(slideIndex += idx)
+  // }
+
+  // next.addEventListener('click', () => {
+  //   plusSlides(+1)
+  // })
+
+  // prev.addEventListener('click', () => {
+  //   plusSlides(-1)
+  // })
 
 
 });
