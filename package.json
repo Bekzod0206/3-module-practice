@@ -23,5 +23,9 @@
   "homepage": "https://github.com/Bekzod0206/3-module-practice#readme",
   "devDependencies": {
     "json-server": "^0.17.1"
+  },
+  "dependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
