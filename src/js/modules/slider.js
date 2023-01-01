@@ -31,7 +31,7 @@ function slider(){
   slidesField.style.transition = '.5s ease all'
   slidesWrapper.style.overflow = 'hidden'
 
-  slides.forEach(item => item.style.width = width)
+  slides.forEach((slide) => {slide.style.width = width})
 
   const indicators = document.createElement('ol')
   indicators.classList.add('carousel-indicators')
@@ -52,10 +52,10 @@ function slider(){
   }
 
   next.addEventListener('click', () => {
-    if(offset == deleteNotDigits(width) * (slides.length -1)){
+    if(offset == +width.slice(0, width.length - 2) * (slides.length -1)){
       offset = 0
     }else{
-      offset += deleteNotDigits(width)
+      offset += +width.slice(0, width.length - 2)
     }
     slidesField.style.transform = `translateX(-${offset}px)`
     if(slideIndex == slides.length){
@@ -76,9 +76,9 @@ function slider(){
 
   prev.addEventListener('click', () => {
     if(offset == 0){
-      offset = deleteNotDigits(width) * (slides.length -1)
+      offset = +width.slice(0, width.length - 2) * (slides.length -1)
     }else{
-      offset -= deleteNotDigits(width)
+      offset -= +width.slice(0, width.length - 2)
     }
     slidesField.style.transform = `translateX(-${offset}px)`
     if(slideIndex == 1){
@@ -102,7 +102,7 @@ function slider(){
       const slideTo = e.target.getAttribute('data-slide-to')
 
       slideIndex = slideTo
-      offset = deleteNotDigits(width) * (slideTo - 1)
+      offset = +width.slice(0, width.length - 2) * (slideTo - 1)
       slidesField.style.transform = `translateX(-${offset}px)`
 
       if(slides.length < 10){
@@ -156,4 +156,4 @@ function slider(){
   // })
 }
 
-module.exports = slider
+export default slider
